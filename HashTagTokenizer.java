@@ -14,26 +14,37 @@ public class HashTagTokenizer {
 
 		In in = new In(fileName);
 
-		// Your code here
+		for(int i = 0; i < dictionary.length; i++){
+			dictionary[i] = in.readLine();
+		}
 
 		return dictionary;
 	}
 
 	public static boolean existInDictionary(String word, String []dictionary) {
-		// Your code here
+		boolean exists = false;
+		for(int i = 0; i < dictionary.length; i++){
+			if (dictionary[i].equals(word)) {
+				exists = true;
+			}
+		}
+		return exists;
 	}
 
 	public static void breakHashTag(String hashtag, String[] dictionary) {
-
+		hashtag = hashtag.toLowerCase();
 		// Base case: do nothing (return) if hashtag is an empty string.
         if (hashtag.isEmpty()) {
             return;
         }
- 
-        int N = hashtag.length();
-
-        for (int i = 1; i <= N; i++) {
 		
+        int N = hashtag.length();
+		
+        for (int i = 1; i <= N; i++) {
+			if (existInDictionary(hashtag.substring(0, i), dictionary)) {
+				System.out.println(hashtag.substring(0, i));
+				breakHashTag(hashtag.substring(i), dictionary);
+			}
         }
     }
 
